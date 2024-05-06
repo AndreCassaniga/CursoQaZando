@@ -24,6 +24,7 @@ module.exports = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    baseURL: 'https://my.api.org/',
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
@@ -59,6 +60,15 @@ module.exports = defineConfig({
     //   use: { ...devices['iPhone 12'] },
     // },
 
+    { name: 'setup', testMatch: /.*\.setup\.js/ },
+    {
+      name: 'chromium:saved-credentials',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
     /* Test against branded browsers. */
     // {
     //   name: 'Microsoft Edge',
